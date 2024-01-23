@@ -18,17 +18,16 @@ fun App() { // Representa a la aplicación
     // mutableStateOf --> así es como se crea un estado
     // la función remember hace que el estado se acuerde que se ha modificado
     val text = remember { mutableStateOf("") }
-    var inputText = ""
+    val message = "Hello ${text.value}"
+    val buttonEnabled = text.value.isNotEmpty()
+
     MaterialTheme {  // Material es reactivo al estado, cada vez que se modifica un estado, material se actualiza
         Column {
-            TextField(value = inputText, onValueChange = {newText ->
-                inputText = newText
-                text.value = inputText})
-            Text(text = "Hello ${text.value}")
+            TextField(value = text.value, onValueChange = {newText -> text.value = newText})
+            Text(text = message)
             Button(onClick = {
                 text.value = ""
-                inputText = ""
-            }) {
+            }, enabled = buttonEnabled) {
                 Text("Clean")
             }
         }
