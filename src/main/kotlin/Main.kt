@@ -16,9 +16,6 @@ import androidx.compose.ui.window.application
 @Preview
 fun App() {
     val text = remember { mutableStateOf("") }
-    fun buildMessage(value: String): String {
-        return "Hello $value"
-    }
     val buttonEnabled = text.value.isNotEmpty()
 
     MaterialTheme {
@@ -33,6 +30,7 @@ fun App() {
         }
     }
 }
+fun buildMessage(value: String) = "Hello $value"
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
