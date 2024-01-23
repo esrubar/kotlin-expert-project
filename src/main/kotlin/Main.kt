@@ -12,19 +12,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
-@Composable // Tienen que tenerlo porque el compilador tiene que pasar por ellos para añadir el codigo necesario
-@Preview // Permite previsualizar la app si tienes el plugin "Compose Multiplatform"
-fun App() { // Representa a la aplicación
-    // mutableStateOf --> así es como se crea un estado
-    // la función remember hace que el estado se acuerde que se ha modificado
+@Composable
+@Preview
+fun App() {
     val text = remember { mutableStateOf("") }
-    val message = "Hello ${text.value}"
+    fun buildMessage(value: String): String {
+        return "Hello $value"
+    }
     val buttonEnabled = text.value.isNotEmpty()
 
-    MaterialTheme {  // Material es reactivo al estado, cada vez que se modifica un estado, material se actualiza
+    MaterialTheme {
         Column {
             TextField(value = text.value, onValueChange = {newText -> text.value = newText})
-            Text(text = message)
+            Text(text = buildMessage(text.value))
             Button(onClick = {
                 text.value = ""
             }, enabled = buttonEnabled) {
