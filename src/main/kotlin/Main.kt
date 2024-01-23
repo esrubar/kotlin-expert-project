@@ -12,19 +12,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
+class AppState {
+    val text =  mutableStateOf("")
+    //Opción 1
+    fun isButtonEnabled() = text.value.isNotEmpty()
+
+    //Opción 2
+    val buttonEnabled: Boolean
+        get() = text.value.isNotEmpty()
+}
+
 @Composable
 @Preview
-fun App() {
-    val text = remember { mutableStateOf("") }
-    val buttonEnabled = text.value.isNotEmpty()
-
+fun App(appState: AppState) {
     MaterialTheme {
         Column {
-            TextField(value = text.value, onValueChange = {newText -> text.value = newText})
-            Text(text = buildMessage(text.value))
+            TextField(value = appState.text.value, onValueChange = {newText -> appState.text.value = newText})
+            Text(text = buildMessage(appState.text.value))
             Button(onClick = {
-                text.value = ""
-            }, enabled = buttonEnabled) {
+                appState.text.value = ""
+            }, enabled = appState.buttonEnabled) {
                 Text("Clean")
             }
         }
@@ -32,8 +39,12 @@ fun App() {
 }
 fun buildMessage(value: String) = "Hello $value"
 
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
-        App()
+fun main() {
+    // Lo que creemos aquí va a vivir toda la vida de la aplicación
+    val appState = AppState()
+    application {
+        Window(onCloseRequest = ::exitApplication) {
+            App(appState)
+        }
     }
 }
