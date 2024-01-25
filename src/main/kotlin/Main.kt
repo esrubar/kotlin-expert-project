@@ -20,24 +20,28 @@ fun <T> MutableState<T>.update(produceValue: (T) -> T) {
 }
 @Composable
 @Preview
-fun App(appState: AppState) {
+fun App(appState: AppState): Unit = with(appState) {
 
-    val notes = appState.state.value.notes;
+    val notes = state.value.notes;
     if(notes == null) {
         LaunchedEffect(true) {
-            appState.loadNotes()
+            loadNotes()
         }
     }
 
 
     MaterialTheme {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            if(appState.state.value.loading) {
+            if(state.value.loading) {
                 CircularProgressIndicator()
             }
+            /*
             if(notes != null) {
                 NotesList(notes)
             }
+            =
+             */
+            notes?.let { NotesList(it) }
         }
     }
 }
