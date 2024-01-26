@@ -20,7 +20,7 @@ fun <T> MutableState<T>.update(produceValue: (T) -> T) {
 }
 @Composable
 @Preview
-fun App(appState: AppState): Unit = with(appState) {
+fun App(): Unit = with(AppState) {
 
     val notes = state.value.notes;
     if(notes == null) {
@@ -73,11 +73,10 @@ private fun NotesList(notes: List<Note>) {
 }
 
 fun main() {
-    // Lo que creemos aquí va a vivir toda la vida de la aplicación
-    val appState = AppState()
+
     application {
         Window(onCloseRequest = ::exitApplication) {
-            App(appState)
+            App()
         }
     }
 }
