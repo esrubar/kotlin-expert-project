@@ -22,7 +22,7 @@ fun <T> MutableState<T>.update(produceValue: (T) -> T) {
 @Preview
 fun App(): Unit = with(AppState) {
 
-    val notes = state.value.notes;
+    val notes = state.notes;
     if(notes == null) {
         LaunchedEffect(true) {
             loadNotes()
@@ -32,7 +32,7 @@ fun App(): Unit = with(AppState) {
 
     MaterialTheme {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            if(state.value.loading) {
+            if(state.loading) {
                 CircularProgressIndicator()
             }
             /*
@@ -72,7 +72,11 @@ private fun NotesList(notes: List<Note>) {
     }
 }
 
+class Database
+
 fun main() {
+
+    val db by lazy { Database() }
 
     application {
         Window(onCloseRequest = ::exitApplication) {
