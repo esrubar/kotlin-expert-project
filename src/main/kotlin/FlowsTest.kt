@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 
 // Flows. Por defecto colds
 /* Cualquier cosa que tarde un tiempo, puede quedarse aquí esperando */
-fun cold(): Unit = runBlocking {
+fun main(): Unit = runBlocking {
     val res = flow {
         emit(1)
         delay(200)
