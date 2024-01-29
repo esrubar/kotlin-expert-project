@@ -25,7 +25,7 @@ fun App(): Unit = with(AppState) {
     val notes = state.notes;
     if(notes == null) {
         LaunchedEffect(true) {
-            loadNotes()
+            loadNotes(this)
         }
     }
 
