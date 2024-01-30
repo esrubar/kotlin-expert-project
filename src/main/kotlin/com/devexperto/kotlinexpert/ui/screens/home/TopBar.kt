@@ -20,6 +20,15 @@ fun TopBar(onFilterClick: (Filter) -> Unit) {
 @Composable
 private fun FilterActions(onFilterClick: (Filter) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
+
+    @Composable
+    infix fun Filter.ToMenuItem(label: String) = DropdownMenuItem(onClick = {
+        expanded = false
+        onFilterClick(this)
+    }) {
+        Text(label)
+    }
+
     IconButton(onClick = { expanded = true }) {
         Icon(
             imageVector = Icons.Default.FilterList,
@@ -27,19 +36,9 @@ private fun FilterActions(onFilterClick: (Filter) -> Unit) {
         )
 
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-
-            listOf(
-                Filter.All to "All",
-                Filter.ByType(Note.Type.TEXT) to "Text",
-                Filter.ByType(Note.Type.AUDIO) to "Audio"
-            ).forEach { (filter, text) ->
-                DropdownMenuItem(onClick = {
-                    expanded = false
-                    onFilterClick(filter)
-                }) {
-                    Text(text)
-                }
-            }
+            Filter.All ToMenuItem "All"
+            Filter.ByType(Note.Type.TEXT) ToMenuItem "Text"
+            Filter.ByType(Note.Type.AUDIO) ToMenuItem "Audio"
         }
     }
 }
