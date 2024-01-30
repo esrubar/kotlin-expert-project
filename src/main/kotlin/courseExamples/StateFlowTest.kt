@@ -1,13 +1,7 @@
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-
 // Stateflow
 // Se utiliza para almacenar un estado y que ese estado se pueda consumir de forma reactiva. Es interesante cuando ese
 // estado representa la interfaz
+/*
 class ViewModel {
     // Backing property. Para que no se pueda settear desde fuera
     private var _state: MutableStateFlow<Note> = MutableStateFlow(Note("title 1", "description 1", Note.Type.TEXT))
@@ -30,3 +24,5 @@ fun main(): Unit = runBlocking {
     }
     viewModel.state.collect(::println)
 }
+
+ */

@@ -1,9 +1,3 @@
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-
 /*
 * DIFERENCIA ENTRE SHARED FLOW Y CHANNEL
 * - En el shared flow si tenemos varios elementos escuchando o recolectando, todos ellos van a recibir las actualizaciones
@@ -11,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 *
 * En este caso, por defecto, hasta que no se consume el mensaje anterior, no se puede enviar uno nuevo
 */
-
+/*
 class ViewModel3 {
     private val _state = Channel<Note>()
     val state = _state.receiveAsFlow()
@@ -34,3 +28,5 @@ fun main(): Unit = runBlocking {
     delay(2000)
     viewModel.state.collect(::println)
 }
+
+ */
