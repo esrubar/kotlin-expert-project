@@ -5,26 +5,34 @@ import com.devexperto.kotlinexpert.data.Note
 import com.devexperto.kotlinexpert.data.fakeNotes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlin.reflect.KProperty
+
+operator fun <T> StateFlow<T>.getValue(owner: Any?, property: KProperty<*>): T = this.value
+operator fun <T> MutableStateFlow<T>.setValue(owner: Any?, property: KProperty<*>, newValue: T) {
+    this.value = newValue
+}
 
 object HomeState {
-    private var _state = MutableStateFlow(UiState())
-    val state = _state.asStateFlow()
+    //private var _state = MutableStateFlow(UiState())
+    //val state = _state.asStateFlow()
+
+    var state: UiState by MutableStateFlow(UiState())
+        private set
 
     fun loadNotes(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            _state.value = UiState(loading = true)
+            state = UiState(loading = true)
             Note.fakeNotes.collect {
-                _state.value = UiState(notes = it)
+                state = UiState(notes = it)
             }
 
         }
     }
 
     fun onFilterClick(filter: Filter) {
-        _state.update { it.copy(filter = filter) }
+        state = state.copy(filter = filter)
     }
 
     data class UiState(
